@@ -9,8 +9,6 @@ import (
 
 func (r *Retriever) RecoverFrames(ctx context.Context, frames []kzgRs.Frame, indices []uint64, dsHeader header.DataStoreHeader) ([]byte, []kzgRs.Frame, error) {
 	log := r.Logger.SubloggerId(ctx)
-	log.Trace().Msg("Entering RecoverFrames function...")
-	defer log.Trace().Msg("Exiting RecoverFrames function...")
 
 	encoder, err := r.KzgGroup.GetKzgEncoder(uint64(dsHeader.NumSys), uint64(dsHeader.NumPar), uint64(dsHeader.OrigDataSize))
 	if err != nil {

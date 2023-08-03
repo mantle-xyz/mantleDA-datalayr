@@ -121,8 +121,6 @@ func (g *GraphClient) QueryOperatorsViewByBlock(ctx context.Context, blockNumber
 	error,
 ) {
 	log := g.Logger.SubloggerId(ctx)
-	log.Trace().Msg("Entering QueryOperatorsViewByBlock function...")
-	defer log.Trace().Msg("Exiting QueryOperatorsViewByBlock function...")
 
 	var query struct {
 		Operators []OperatorBlockView `graphql:"operators(where: {fromBlockNumber_lte:$blockNumber,toBlockNumber_gt:$blockNumber,status:0})"`

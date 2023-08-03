@@ -26,9 +26,6 @@ type RetrievalResult struct {
 
 func (v *Retriever) RetrieveOperatorFrames(ctx context.Context, ds *graphView.DataStoreRetrieve, socket string, indices []uint64, verifier *rs.KzgVerifier) ([]rs.Frame, []uint64, error) {
 	log := v.Logger.SubloggerId(ctx)
-	log.Trace().Msg("Entering RetrieveOperatorFrames function...")
-	defer log.Trace().Msg("Exiting RetrieveOperatorFrames function...")
-
 	conn, err := grpc.Dial(
 		socket,
 		grpc.WithChainStreamInterceptor(
@@ -104,9 +101,6 @@ func (v *Retriever) validateFrame(
 	verifier *rs.KzgVerifier,
 ) (rs.Frame, error) {
 	log := v.Logger.SubloggerId(ctx)
-	log.Trace().Msg("Entering validateFrame function...")
-	defer log.Trace().Msg("Exiting validateFrame function...")
-
 	frame, err := rs.Decode(frameBytes)
 	if err != nil {
 		log.Error().Msgf("decode frame bytes error %v", err)
@@ -128,9 +122,6 @@ func (v *Retriever) validateFrame(
 }
 func (v *Retriever) RetrieveAllFrames(ctx context.Context, dataStoreId uint32) ([]rs.Frame, []uint64, *graphView.DataStoreRetrieve, error) {
 	log := v.Logger.SubloggerId(ctx)
-	log.Trace().Msg("Entering RetrieveAllFrames function...")
-	defer log.Trace().Msg("Exiting RetrieveAllFrames function...")
-
 	ds, err := v.GraphClient.QueryDataStoreInitBlockNumber(dataStoreId)
 	if err != nil {
 		return nil, nil, nil, err
@@ -194,10 +185,6 @@ func (v *Retriever) RetrieveAllFrames(ctx context.Context, dataStoreId uint32) (
 }
 
 func (v *Retriever) collectFrames(ctx context.Context, update chan RetrievalResult, numRegistrant int) ([]rs.Frame, []uint64, error) {
-	log := v.Logger.SubloggerId(ctx)
-	log.Trace().Msg("Entering collectFrames function...")
-	defer log.Trace().Msg("Exiting collectFrames function...")
-
 	numReply := 0
 	rr := make([]rs.Frame, 0)
 	var er error

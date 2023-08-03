@@ -34,9 +34,6 @@ func NewServer(config *Config, retriever *Retriever, logger *logging.Logger) *Se
 }
 
 func (s *Server) Start() {
-	s.logger.Trace().Msg("Entering StartServer function...")
-	defer s.logger.Trace().Msg("Exiting StartServer function...")
-
 	//todo: resolve fatal
 	go func(s *Server) {
 		addr := fmt.Sprintf("%s:%s", localhost, s.GrpcPort)
@@ -68,8 +65,6 @@ func (s *Server) Start() {
 
 func (s *Server) RetrieveFramesAndData(ctx context.Context, in *pb.FramesAndDataRequest) (*pb.FramesAndDataReply, error) {
 	log := s.logger.SubloggerId(ctx)
-	log.Trace().Msg("Entering RetrieveFramesAndData function...")
-	defer log.Trace().Msg("Exiting RetrieveFramesAndData function...")
 	dataStoreId := in.GetDataStoreId()
 
 	frames, indices, ds, err := s.Retriever.RetrieveAllFrames(ctx, uint32(dataStoreId))

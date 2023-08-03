@@ -27,10 +27,6 @@ type StateView struct {
 
 // Query and Convert graphql struct to view struct
 func (g *GraphClient) GetStateView(ctx context.Context, blockNumber uint32) (*StateView, error) {
-	log := g.Logger.SubloggerId(ctx)
-	log.Trace().Msg("Entering GetStateView function...")
-	defer log.Trace().Msg("Exiting GetStateView function...")
-
 	ops, err := g.QueryOperatorsViewByBlock(ctx, blockNumber)
 	if err != nil {
 		return nil, err
@@ -61,8 +57,6 @@ func (g *GraphClient) GetStateView(ctx context.Context, blockNumber uint32) (*St
 		TotalOperator: totalOp,
 	}
 
-	log.Trace().Msgf("stateView %v", stateView)
-
 	return &stateView, nil
 }
 
@@ -72,8 +66,7 @@ func (g *GraphClient) QueryOperatorTotalsByBlock(ctx context.Context, blockNumbe
 	error,
 ) {
 	log := g.Logger.SubloggerId(ctx)
-	log.Trace().Msg("Entering QueryOperatorTotalsByBlock function...")
-	defer log.Trace().Msg("Exiting QueryOperatorTotalsByBlock function...")
+
 	variables := map[string]interface{}{
 		"blockNumber": graphql.String(fmt.Sprintf("%v", blockNumber)),
 	}
@@ -119,8 +112,6 @@ func (g *GraphClient) QueryOperatorTotalsByBlock(ctx context.Context, blockNumbe
 		return nil, nil, err
 	}
 
-	log.Trace().Msgf("total ops Query %v", stakeQuery)
-
 	return totalStake, totalOps, nil
 }
 
@@ -151,10 +142,6 @@ func (d *OperatorBlockView) RegistrantView() (
 	}
 
 	pubkeyG1 := bls.ConvertStringsToG1Point(pubkeyG1Strings)
-
-	//pubkeyHash := crypto.Keccak256(pubkey)
-	//var pubkeyHashArray [32]byte
-	//copy(pubkeyHashArray[:], pubkeyHash)
 
 	mantleFirstStake, ok := new(big.Int).SetString(
 		string(d.StakeHistory[0].MantleFirstStake),

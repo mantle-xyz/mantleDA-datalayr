@@ -15,8 +15,6 @@ func (g *GraphClient) PollingInitDataStore(
 	pollingDuration time.Duration,
 ) (DataStoreInit, bool) {
 	log := g.Logger.SubloggerId(ctx)
-	log.Trace().Msg("Entering PollingInitDataStore function...")
-	defer log.Trace().Msg("Exiting PollingInitDataStore function...")
 
 	log.Debug().Msgf("PollingInitDataStore from txHash: %v", hexutil.Encode(txHash[:]))
 
@@ -48,8 +46,6 @@ func (g *GraphClient) PollingInitDataStoreByMsgHash(
 	pollingDuration time.Duration,
 ) (DataStoreInit, bool) {
 	log := g.Logger.SubloggerId(ctx)
-	log.Trace().Msg("Entering PollingInitDataStoreByMsgHash function...")
-	defer log.Trace().Msg("Exiting PollingInitDataStoreByMsgHash function...")
 
 	log.Trace().Msgf("PollingInitDataStore from msgHash %v", hexutil.Encode(msgHash[:]))
 
@@ -83,8 +79,6 @@ func (g *GraphClient) PollingConfirmDataStore(
 	retry uint32,
 ) (*DataStoreConfirm, bool) {
 	log := g.Logger.SubloggerId(ctx)
-	log.Trace().Msg("Entering PollingConfirmDataStore function...")
-	defer log.Trace().Msg("Exiting PollingConfirmDataStore function...")
 
 	ticker := time.NewTicker(time.Second)
 	defer ticker.Stop()
