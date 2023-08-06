@@ -5,6 +5,7 @@ package kzg
 
 import (
 	"errors"
+	"fmt"
 
 	bls "github.com/Layr-Labs/datalayr/lib/encoding/kzg/bn254"
 )
@@ -19,7 +20,9 @@ type KZGSettings struct {
 func NewKZGSettings(fs *FFTSettings, srs *SRS) (*KZGSettings, error) {
 
 	if uint64(len(srs.G1)) < fs.MaxWidth {
-		return nil, errors.New("srs length is not sufficient")
+		return nil, errors.New(
+			fmt.Sprintf("srs length is not sufficient, len(srs.G1)): %v, fs.MaxWidth: %v", len(srs.G1), fs.MaxWidth),
+		)
 	}
 
 	ks := &KZGSettings{
