@@ -38,7 +38,6 @@ func (v *Retriever) RetrieveOperatorFrames(ctx context.Context, ds *graphView.Da
 		log.Error().Err(err).Msgf("Retriever cannot connect to %v\n", socket)
 		return nil, nil, err
 	}
-
 	defer conn.Close()
 	c := pb.NewDataDispersalClient(conn)
 
@@ -48,8 +47,8 @@ func (v *Retriever) RetrieveOperatorFrames(ctx context.Context, ds *graphView.Da
 	request := &pb.RetrieveFrameRequest{
 		Commit: ds.MsgHash,
 	}
-
-	replyStream, err := c.RetrieveFrame(ctx, request)
+	opt := grpc.MaxCallSendMsgSize(1024 * 1024 * 300)
+	replyStream, err := c.RetrieveFrame(ctx, request, opt)
 	if err != nil {
 		return nil, nil, err
 	}
