@@ -19,7 +19,9 @@ func (g *GraphClient) PollingInitDataStore(
 	log.Debug().Msgf("PollingInitDataStore from txHash: %v", hexutil.Encode(txHash[:]))
 
 	exit := time.NewTimer(pollingDuration)
+	defer exit.Stop()
 	ticker := time.NewTicker(POLLING_INTERVAL)
+	defer ticker.Stop()
 
 	for {
 		ds, err := g.QueryInitDataStoreByTxHash(txHash[:])
