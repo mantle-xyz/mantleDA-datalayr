@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cache
+  labels:
+    app: cache
+spec:
+  serviceName: cache
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cache
+  volumeClaimTemplates:
+  - metadata:
+      name: cache-data
+      labels:
+        owner: cache
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 5Gi
+  template:
+    metadata:
+      labels:
+        app: cache
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: cache
+        image: ghcr.io/layr-labs/datalayr-explorer-cache:0.0.1
+        imagePullPolicy: Always
+        env:
+          - name: MONGODB_URI
+            value: mongodb://root:{{mongodb_password}}@mongodb-svc:27017/bin?authSource=admin
