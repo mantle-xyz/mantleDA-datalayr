@@ -20,12 +20,10 @@ cluster/github_users.json
 cluster/github_users
 cluster/kustomize/base/chain/config/prod-chain/secret
 
-contracts/**/lib/**
 contracts/**/out
 contracts/**/cache
 contracts/**/broadcast
 
-contracts/**/lib/**
 contracts/**/out
 contracts/**/cache
 contracts/**/broadcast
